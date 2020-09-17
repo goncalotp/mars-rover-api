@@ -37,7 +37,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <link rel="icon" href="assets/shuttle.gif">
+    <link rel="icon" href="assets/shuttle.gif" />
     <title>Mars Rover API</title>
   </head>
   <body>
@@ -49,54 +49,57 @@
           <div id="roversForm">
             <input id="date" type="date" />
             <br />
-            <br>
+            <br />
             <button type="submit" onclick="getInfo()">See information</button>
-            <br>
-            <br>
-            <h6>Click above to see the photo that Rover took in Mars in that especific date.</h6>
+            <br />
+            <br />
+            <h6>
+              Click above to see the photo that Rover took in Mars in that
+              especific date.
+            </h6>
           </div>
         </div>
-        <div class='col-md-5' id="info" >
-        </div>
-      
-       
+        <div class="col-md-5" id="info"></div>
       </div>
     </div>
     <script>
-                function getInfo() {
-                  var date = document.getElementById("date").value;
-                  console.log(date);
-                  var photosRover = [];
-                  axios
-                    .get(
-                      "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=" +
-                        date +
-                        "&api_key=DNDuPeKj1oblbamo9d9uaTM61xjJV0veu74u8UiE"
-                    )
-                    .then((response) => {
-                      for (var i in response.data.photos) {
-                        photosRover.push(response.data.photos[i]);
-                        console.log(photosRover.length);
-                        for (let x=3; x < photosRover.length; x++){
-                          console.log(photosRover[x])
-                          var info = document.getElementById("info");
-                        info.innerHTML =
-                          " <table style='width:100%:''> <tr><th style='color:white'> </th></tr><tr><td> <img style='width: 70%'src=" 
-                              + photosRover[x].img_src +
-                              " ></td></tr>  </tr><tr><td style='color:white; font-size:20px'><b>Rover name:</b> "
-                                  + photosRover[x].rover.name+" </td></tr><tr><td style='color:white'><b> Camera name:</b> "
-                                    + photosRover[x].camera.full_name+ " </td> </tr><tr><td style='color:white'><b>Launch date:</b> "
-                                      +photosRover[x].rover.launch_date+ "</td></tr><tr><td style='color:white'><b>Landing date:</b> "
-                                      +photosRover[x].rover.landing_date+ "</td></tr><tr><td style='color:white'><b>ID:</b> "
-                                + photosRover[x].id+" </td></table>"
-                        } 
-                        
-                      }
-                    })
-                    .catch((error = console.log("error")));
-                  console.log(photosRover[0]);
-                }
+      function getInfo() {
+        var date = document.getElementById("date").value;
+        var photosRover = [];
+        axios
+          .get(
+            "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=" +
+              date +
+              "&api_key=DNDuPeKj1oblbamo9d9uaTM61xjJV0veu74u8UiE"
+          )
+   
+          .then((response) => {
+            console.log(response.data.photos)
+            response.data.photos.forEach(item =>{
+              photosRover.push(item);
+              console.log(item);
+              for (let x = 0; x <= 3 ; x++) {
+                console.log(photosRover[x])
+                var info = document.getElementById("info");
+                info.innerHTML =
+                  " <table style='width:100%:''> <tr><th style='color:white'> </th></tr><tr><td> <img style='width: 70%'src=" +
+                  photosRover[x].img_src +
+                  " ></td></tr>  </tr><tr><td style='color:white; font-size:20px'><b>Rover name:</b> " +
+                  photosRover[x].rover.name +
+                  " </td></tr><tr><td style='color:white'><b> Camera name:</b> " +
+                  photosRover[x].camera.full_name +
+                  " </td> </tr><tr><td style='color:white'><b>Launch date:</b> " +
+                  photosRover[x].rover.launch_date +
+                  "</td></tr><tr><td style='color:white'><b>Landing date:</b> " +
+                  photosRover[x].rover.landing_date +
+                  "</td></tr><tr><td style='color:white'><b>ID:</b> " +
+                  photosRover[x].id +
+                  " </td></table>";
+              }
+            }) 
+          })
+          .catch((error = console.log("error")));
+      }
     </script>
-
   </body>
 </html>
