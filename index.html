@@ -36,6 +36,7 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Mars Rover API</title>
   </head>
   <body>
@@ -49,38 +50,63 @@
             <button type="submit" onclick="getInfo()">See information</button>
           </div>
         </div>
-        <div class="information col-md-6">
-          <h1 id="info"></h1>
-        </div>
+        <div id="info" class="information col-md-6"></div>
       </div>
     </div>
     <script>
-      function getInfo(response) {
+      function getInfo() {
         var date = document.getElementById("date").value;
         console.log(date);
-        var exampleURL =
-          "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=" +
-          date;
-        console.log(exampleURL);
+        var photosRover = [];
+        axios
+          .get(
+            "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=" +
+              date +
+              "&api_key=DNDuPeKj1oblbamo9d9uaTM61xjJV0veu74u8UiE"
+          )
 
-        var apiKey = "DNDuPeKj1oblbamo9d9uaTM61xjJV0veu74u8UiE";
-
-        var request = new XMLHttpRequest();
-        request.open("GET", exampleURL + "&api_key=" + apiKey, true);
-
-        request.addEventListener("load", function () {
-          if (request.status >= 200 && request.status < 400) {
-            var response = JSON.parse(request.responseText);
-            console.log(response);
-          } else {
-            console.log("Error in network request: " + request.statusText);
-          }
-        });
-        request.send(null);
-
-        var information = document.getElementById("info");
-        information.innerHTML = response
+          .then((response) => {
+            for (var i in response.data.photos) {
+              photosRover.push(response.data.photos[i]);
+              console.log(photosRover);
+              var info = document.getElementById("info");
+              info.innerHTML =
+                " <h1>" +
+                photosRover[0].id +
+                "</h1>" +
+                "   <br>" +
+                "<img src=" +
+                photosRover[0].img_src +
+                " >";
+            }
+          })
+          .catch((error = console.log("error")));
+        console.log(photosRover[0]);
       }
+      // fetch(url) // Call the fetch function passing the url of the API as a parameter
+      //   .then((resp) => resp.json()) // Transform the data into json
+      //   .then(data => console.log(data));
+      //     // Create and append the li's to the ul
+
+      // console.log(exampleURL);
+
+      // var apiKey = "DNDuPeKj1oblbamo9d9uaTM61xjJV0veu74u8UiE";
+
+      // var request = new XMLHttpRequest();
+      // request.open("GET", exampleURL + "&api_key=" + apiKey, true);
+      // var array = [];
+      // request.addEventListener("load", function () {
+      //   if (request.status >= 200 && request.status < 400) {
+      //     // response.data.photos = array
+      //     // var information = document.getElementById("info");
+      //     // information.innerHTML = array
+      //     var response = JSON.parse(request.responseText);
+      //     console.log(response);
+      //   } else {
+      //     console.log("Error in network request: " + request.statusText);
+      //   }
+      // });
+      // request.send(null);
     </script>
   </body>
 </html>
