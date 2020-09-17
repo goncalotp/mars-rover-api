@@ -5,6 +5,10 @@ body {
     
 }
 
+.container-fluid{
+  width: 100%
+}
+
 .row {
     margin-top:100px;
 }
@@ -13,12 +17,15 @@ h1{
     color: rgba(255, 255, 255, 0.89);
 }
 
-h5{
+h5,h6{
     color: white;
     font-family: 'Hind Vadodara', sans-serif;
 }
 
+#logo{
+  width: 100px;
 
+}
 
 #title{
     text-align:center;
@@ -29,26 +36,30 @@ h5{
 #rocket {
     margin-top: 200px;
     margin-left: 500px;
-    animation: 10s slide-up;
-  margin-top:0%;
-  animation-fill-mode: forwards;
 }
 
 .information {
     text-align:center
 }
 
-@keyframes slide-up {
-    from {
-      margin-top: 300px;
-      height: 100%; 
-    }
-  
-    to {
-      margin-top: 50px;
-      height: 100%;
-    }
-  }
+.buttonForInfo{
+  margin-left:40px;
+}
 
+
+button{
+  background-color: white;
+  color: black;
+  border: 1px;
+  border-radius:28px;
+  font-family: 'Hind Vadodara', sans-serif;
+  
+
+}
+
+button:hover {
+  background-color: rgb(8, 22, 59);
+  color: white;
+}
 
 
